@@ -1,6 +1,10 @@
+require_relative 'SlackHook'
+
 module VagrantPlugins
 	module Slack	
 		class TestHook
+			include Slack
+
 	        def initialize(app, env)
 	          @app = app
 	          @machine = env[:machine]
@@ -8,7 +12,7 @@ module VagrantPlugins
 	        end
 
 	        def call(env)
-	          @ui.info @machine.config.slack.hook_url
+	          sendMessage("This came from a new Vagrant Plugin!")
 	          @app.call(env)
 	        end
       	end

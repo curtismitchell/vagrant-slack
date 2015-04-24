@@ -15,7 +15,7 @@ module VagrantPlugins
 		def sendMessage(msg)
 			initRequest(@machine.config.slack.hook_url)
 			body = '{"username":"' + @machine.config.slack.username + '", "text":"' + msg + '", "icon_emoji":"' + @machine.config.slack.emoticon + '"}'
-			
+			@ui.info "Posting to Slack"
 			@request.set_form_data({"payload" => body.to_s })
 			response = @http.request(@request)
 		end

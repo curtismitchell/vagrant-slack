@@ -1,7 +1,8 @@
-require_relative 'testhook'
+require_relative 'hooks/up'
+require_relative 'hooks/destroy'
 
 module VagrantPlugins
-	module Slack		
+	module Slack
 		class Plugin < Vagrant.plugin("2")
 			name "Slack"
 			description <<-DESC
@@ -19,7 +20,7 @@ module VagrantPlugins
 			end
 
 			action_hook(:slack, :machine_action_up) do |hook|
-				hook.append(Slack::TestHook)
+				hook.prepend(Slack::Hooks::UpHook)
 			end
 
 			# action_hook(:slack, :machine_action_halt) do |hook|
@@ -31,7 +32,7 @@ module VagrantPlugins
 			# end
 
 			action_hook(:slack, :machine_action_destroy) do |hook|
-				hook.prepend(TestHook)
+				hook.prepend(Slack::Hooks::DestroyHook)
 			end
 
 			# action_hook(:slack, :machine_action_destroy) do |hook|
